@@ -1,0 +1,143 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+         int n = matrix.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            int left = 0;
+            int right = n - 1;
+            while (left < right) {
+                int temp = matrix[i][left];
+                matrix[i][left] = matrix[i][right];
+                matrix[i][right] = temp;
+                left++;
+                right--;
+            }
+        }
+    }
+}
+
+class Solution {
+    public int[][] merge(int[][] Intervals) {
+          Arrays.sort(Intervals, (a, b) -> a[0] - b[0]);
+        
+        List<int[]> list = new ArrayList<>();
+        for(int i = 0; i < Intervals.length; i++) {
+            int[] row = Intervals[i];
+            if(list.isEmpty() || row[0] > list.get(list.size() - 1)[1]) {
+                list.add(row);
+            } else {
+                list.set(list.size() - 1, new int[] {list.get(list.size() - 1)[0], Math.max(list.get(list.size() - 1)[1], row[1])});
+            }
+        }
+        
+        int[][] result = new int[list.size()][2];
+        for(int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+        
+        return result;
+    }
+}
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+     for (int j = 0, i = m; j < n; j++) {
+            nums1[i] = nums2[j];
+            i++;
+        }
+        Arrays.sort(nums1);
+    }
+}
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for(int num:nums){
+            if(!set.add(num)){
+                return num;
+            }
+        }
+    return nums.length;
+    }
+}
+
+
+
+public class Solution {
+    public ArrayList<Integer> repeatedNumber(final List<Integer> A) {
+       ArrayList<Integer> ans = new ArrayList<>();
+       
+        Map<Integer, Integer> map = new HashMap<>();
+       
+        int dupli = -1;
+        int originalSum = 0;
+        int arraySum = 0;
+       
+        for(int i=1; i<=A.size(); i++) originalSum+=i;
+        for(int i=0; i<A.size(); i++) arraySum+=A.get(i);
+       
+        for(int i=0; i<A.size(); i++){
+        if(map.containsKey(A.get(i))){
+            dupli = A.get(i);
+            break;
+        }else{
+            map.put(A.get(i), 1);
+        }
+        }
+       
+        int resSum = arraySum - dupli;
+       
+        int misNum = originalSum - resSum;
+       
+        ans.add(dupli);
+        ans.add(misNum);
+       
+        return ans;
+        }
+}
+
+
+public class Solution {
+     static long count = 0;
+    public static long getInversions(long arr[], int N) {
+         count=0;
+        mergeSort(arr,0,N-1);
+        return count;
+    }
+    public static long[] mergeSort(long[] arr, long low, long high) {
+       if (low == high) {
+           return new long[] { arr[(int) low] };
+       }
+       long mid = low + (high - low) / 2;
+       long[] left = mergeSort(arr, low, mid);
+       long[] right = mergeSort(arr, mid + 1, high);
+       long[] mer = mergeTwoSortedArray(left, right);
+       return mer;
+   }
+
+    public static long[] mergeTwoSortedArray(long[] left, long[] right) {
+       int i = 0, j = 0, k = 0;
+       long[] merged = new long[left.length + right.length];
+       while (i < left.length && j < right.length) {
+           if (left[i] <= right[j]) {
+               merged[k++] = left[i++];
+           } else {
+               count += (left.length - i);
+               merged[k++] = right[j++];
+           }
+       }
+       while (i < left.length) {
+           merged[k++] = left[i++];
+       }
+       while (j < right.length) {
+           merged[k++] = right[j++];
+       }
+       return merged;
+   }
+}
