@@ -1,0 +1,140 @@
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> numMap = new HashMap<>();
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            int complement = target - nums[i];
+            if (numMap.containsKey(complement)) {
+                return new int[]{numMap.get(complement), i};
+            }
+            numMap.put(nums[i], i);
+        }
+        return new int[]{};
+    }
+}
+
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+          List<List<Integer>> ans = new ArrayList<>();
+        int n = nums.length;
+        Arrays.sort(nums);
+        for (int i = 0; i < n - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            for (int j = i + 1; j < n - 2; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+                int left = j + 1;
+                int right = n - 1;
+                while (left < right) {
+                    long sum = (long) nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum < target) {
+                        left++;
+                    } else if (sum > target) {
+                        right--;
+                    } else {
+                        ans.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+                        while (left < right && nums[left] == nums[left + 1]) {
+                            left++;
+                        }
+                        while (left < right && nums[right] == nums[right - 1]) {
+                            right--;
+                        }
+                        left++;
+                        right--;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+class Solution {
+    public int longestConsecutive(int[] nums) {
+		 if(nums.length == 0)
+            return 0;
+        Arrays.sort(nums);
+        int count = 1;
+        int maxCount = 1;
+        for(int i = 0; i < nums.length - 1; i++)
+        {
+            if(nums[i+1] == nums[i] + 1)
+                count++;
+            else if(nums[i+1] == nums[i])
+                continue;
+            else
+                count = 1;
+
+            maxCount = Math.max(maxCount,count);
+        }
+        return maxCount;
+    }
+}
+
+class GfG
+{
+    int maxLen(int arr[], int n)
+    {
+        // Your code here
+        HashMap<Integer, Integer> h = new HashMap<>();
+         int cursum = 0;
+        int len = 0;
+        for(int i=0; i<n; i++){
+            cursum+=arr[i];
+            if(cursum==0) len = i+1;
+            
+            if(!h.containsKey(cursum)){ //if sum repeats don't add
+                h.put(cursum, i);
+            }
+            if(h.containsKey(cursum)){  
+                len = Math.max(len, i-h.get(cursum));
+            }
+        }
+        return len;
+    }
+}
+
+
+public class Solution {
+    public int solve(ArrayList<Integer> A, int B) {
+          HashMap<Integer,Integer> hm = new HashMap<>();
+        int count =0;
+        int val =0;
+        hm.put(0,1);
+        for(int i=0;i<A.size();i++){
+          val = val ^ A.get(i);
+                if(hm.containsKey(val^B)){
+                    count+=hm.get(val^B);
+                }  
+                hm.put(val,hm.getOrDefault(val,0)+1);
+        }
+        return count; 
+    }
+}
+
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s.length()<1) return  0;
+        int fp=0;
+        int sp=0;
+        int max=0;
+        HashSet<Character> set= new HashSet<>();
+        while(sp<s.length()){
+            if(!set.contains(s.charAt(sp))){
+                set.add(s.charAt(sp));
+                sp++;
+                max=Math.max(max,set.size());
+            }
+            else{
+                set.remove(s.charAt(fp));
+                fp++;
+            }
+        }
+        
+        return max;
+    }
+}
