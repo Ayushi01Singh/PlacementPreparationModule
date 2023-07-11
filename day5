@@ -1,0 +1,146 @@
+  public class ListNode {
+     int val;
+     ListNode next;
+    ListNode() {}
+      ListNode(int val) { this.val = val; }
+      ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ }
+ 
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode temp=head;
+        ListNode prev=null;
+        while(temp!=null){
+            ListNode next=temp.next;
+            temp.next=prev;
+            prev=temp;
+            temp=next;
+        }
+        head=prev;
+        return head;
+    }
+}
+
+
+
+public class ListNode {
+     int val;
+     ListNode next;
+     ListNode() {}
+      ListNode(int val) { this.val = val; }
+      ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+  }
+ 
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode ptr=head;
+        int c=0,mid=0;
+        while(ptr!=null){
+            ptr=ptr.next;
+            c++;
+        }
+          mid=c/2+1;
+        for(int i=1;i<mid;i++){
+        head=head.next;
+    }
+    return head;
+    }
+}
+
+
+
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+         if(list1==null) return list2;
+     if(list2==null) return list1;
+     if(list1.val<list2.val){
+        list1.next = mergeTwoLists(list1.next,list2);
+        return list1;
+    }else{
+        list2.next= mergeTwoLists(list1,list2.next);
+        return list2;
+     }
+    }
+}
+
+
+* public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode temp=head;
+    	int c=0;
+    	while(temp!=null){
+    	    c++;
+    	    temp=temp.next;
+      }
+    	c=c-n;
+    	ListNode x=head;
+    	while(c!=0){
+    	    x=x.next;
+    	    c--;
+    	}
+    	return x;
+    }
+}
+
+
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode tail = dummyHead;
+        int carry = 0;
+
+        while (l1 != null || l2 != null || carry != 0) {
+            int digit1 = (l1 != null) ? l1.val : 0;
+            int digit2 = (l2 != null) ? l2.val : 0;
+
+            int sum = digit1 + digit2 + carry;
+            int digit = sum % 10;
+            carry = sum / 10;
+
+            ListNode newNode = new ListNode(digit);
+            tail.next = newNode;
+            tail = tail.next;
+
+            l1 = (l1 != null) ? l1.next : null;
+            l2 = (l2 != null) ? l2.next : null;
+        }
+
+        ListNode result = dummyHead.next;
+        dummyHead.next = null;
+        return result;
+    }
+}
+
+
+
+
+public class ListNode {
+      int val;
+      ListNode next;
+      ListNode(int x) { val = x; }
+  }
+ 
+class Solution {
+    public void deleteNode(ListNode node) {
+   ListNode ptr=node.next;
+    node.val=ptr.val;
+    node.next=ptr.next;
+    ptr=null;
+    }
+}
