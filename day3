@@ -1,0 +1,130 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+         int i = 0;
+        int j = matrix[0].length - 1;
+            while (i < matrix.length && j >= 0) {
+                    if (matrix[i][j] == target) {
+                        return true;
+                    } else if (matrix[i][j] > target) {
+                        j--;
+                    } else {
+                        i++;
+                    }
+                }
+            return false;
+    }
+}
+
+public class Solution {
+  double myPow(double x, int n) {
+    if(n<0) return 1/x * myPow(1/x, -(n+1));
+    if(n==0) return 1;
+    if(n==2) return x*x;
+    if(n%2==0) return myPow( myPow(x, n/2), 2);
+    else return x*myPow( myPow(x, n/2), 2);
+}
+}
+
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int can=0;   
+        int count=0;
+        for(int num:nums){
+            if(count ==0){
+                can=num;
+            }
+             if(num==can){
+                    count+=1;
+                }
+                else{
+                    count-=1;
+                }
+            }
+        return can;
+    }
+}
+
+
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        List<Integer> ans=new LinkedList<>();
+        HashMap<Integer,Integer> map=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            if(map.containsKey(nums[i])){
+                map.put(nums[i],map.get(nums[i])+1);
+            }
+            else
+            {
+                map.put(nums[i],1);
+            }
+        }
+        Set<Integer> keySet=map.keySet();
+        for(Integer key:keySet){
+            if(map.get(key)>nums.length/3)
+            ans.add(key);
+        }
+        return ans;
+    }
+}
+
+
+class Solution {
+    public int uniquePaths(int m, int n) {
+          int[][] dp = new int[m][n];
+        return findPath(0, 0, m, n, dp);
+    }
+    int findPath(int path1, int path2, int m, int n, int[][] dp) {
+        if (path1+1==m && path2+1==n) return 1;
+        if (path1==m) return 0;
+        if (path2==n) return 0;
+        if (dp[path1][path2]!=0) return dp[path1][path2];
+        dp[path1][path2] = findPath(path1+1, path2, m, n, dp) + findPath(path1, path2+1, m ,n, dp);
+        return dp[path1][path2];
+    }
+}
+
+
+class Solution {
+   int merge(int[] nums,int low,int mid, int high){
+        int count=0;
+        int j = mid+1;
+        for(int i=low;i<=mid;i++){
+            while(j<=high && nums[i]>(2*(long)nums[j])){
+                j++;
+            }count+=j-(mid+1);
+        }
+        ArrayList<Integer>arr=new ArrayList<>();
+        int left=low,right=mid+1;
+        while(left<=mid && right<=high){
+            if(nums[left]<=nums[right]){
+                arr.add(nums[left++]);
+            }else{
+                arr.add(nums[right++]);
+            }
+        }
+        while(left<=mid){
+                arr.add(nums[left++]);
+            }
+        while(right<=high){
+                arr.add(nums[right++]);
+            }
+        for(int i=low;i<=high;i++){
+            nums[i]=arr.get(i-low);
+        }
+        return count;
+    }
+    public int mergeSort(int []nums,int low,int high){
+        if(low>=high){
+            return 0;
+        }
+        int mid=(low+high)/2;
+        int inv=mergeSort(nums,low,mid);
+        inv+=mergeSort(nums,mid+1,high);
+        inv+=merge(nums,low,mid,high);
+        return inv;
+    }
+    public int reversePairs(int[]nums){
+        return mergeSort(nums,0,nums.length-1);
+    } 
+}
