@@ -1,0 +1,166 @@
+class Pair{
+    int start,end;
+    public Pair(int start,int end){
+        this.start=start;
+        this.end=end;
+    }
+}
+
+class comparepair implements Comparator<Pair>{
+    public int compare(Pair p1, Pair p2){
+        if(p1.end<p2.end) return -1;
+        else if(p1.end<p2.end) return 1;
+        return 1;
+    }
+}
+class Solution 
+{
+    public static int maxMeetings(int a[], int b[], int n)
+    {
+        // add your code here
+        int temp=1;
+        ArrayList<Pair> List=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            List.add(new Pair(a[i],b[i]));
+        }
+        Collections.sort(List,new comparepair());
+        int endTime=List.get(0).end;
+        for (int i = 1; i < b.length; i++) {
+            if(List.get(i).start>endTime){
+                endTime=List.get(i).end;
+                temp++;
+            }
+        }
+        return temp;
+    }
+}
+
+
+
+class Solution
+{
+    static int findPlatform(int arr[], int dep[], int n)
+    {
+         Arrays.sort(arr);
+        Arrays.sort(dep);
+        int i=0,j=0,max=0,c=0;
+
+        while(i<n){
+            if(arr[i]<=dep[j]){
+                c++;i++;
+            }
+            else{
+                c--;j++;
+            }
+            max=Math.max(c,max);
+        }
+       return max;
+    }
+    
+}
+
+
+class Solution
+{
+    //Function to find the maximum profit and the number of jobs done.
+    int[] JobScheduling(Job arr[], int n)
+    {
+        // Your code here
+         Arrays.sort(arr, (a, b) -> (b.profit - a.profit));
+
+      int maxi = 0;
+      for (int i = 0; i < n; i++) {
+         if (arr[i].deadline > maxi) {
+            maxi = arr[i].deadline;
+         }
+      }
+
+      int result[] = new int[maxi + 1];
+
+      for (int i = 1; i <= maxi; i++) {
+         result[i] = -1;
+      }
+
+      int countJobs = 0, jobProfit = 0;
+
+      for (int i = 0; i < n; i++) {
+
+         for (int j = arr[i].deadline; j > 0; j--) {
+
+            // Free slot found 
+            if (result[j] == -1) {
+               result[j] = i;
+               countJobs++;
+               jobProfit += arr[i].profit;
+               break;
+            }
+         }
+      }
+
+      int ans[] = new int[2];
+      ans[0] = countJobs;
+      ans[1] = jobProfit;
+      return ans;
+
+   }
+}   
+/*
+class Job {
+    int id, profit, deadline;
+    Job(int x, int y, int z){
+        this.id = x;
+        this.deadline = y;
+        this.profit = z; 
+    }
+}
+*/
+
+
+class Solution
+{
+    double fractionalKnapsack(int W, Item arr[], int n) 
+    {
+        Arrays.sort(arr,(a,b)->((double)b.value/(double)b.weight > (double)a.value/(double)a.weight)?1:-1);
+        double res=0.0;
+        int wt=W;
+        for(int i=0;i<n;i++){
+            if(arr[i].weight <= wt){
+                res+=arr[i].value;
+                wt-=arr[i].weight;
+            }
+            else{
+                int remwt=wt;
+                double v=((double)arr[i].value/(double)arr[i].weight)*(double) remwt;
+                res+=v;
+                break;
+            }
+        }
+        return res;
+    }
+}
+
+
+class Solution{
+
+	public int minCoins(int coins[], int m, int V) 
+	{ 
+	     if (V == 0) return 0;
+      
+       int res = Integer.MAX_VALUE;
+      
+       for (int i=0; i<m; i++)
+       {
+         if (coins[i] <= V)
+         {
+             int sub_res = minCoins(coins, m, V-coins[i]);
+      
+             if (sub_res != Integer.MAX_VALUE && sub_res + 1 < res)
+                res = sub_res + 1;
+         }
+       }
+       return res;
+	} 
+}
+
+
+
