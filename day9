@@ -1,0 +1,154 @@
+class Solution{
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
+        // code here
+        ArrayList<Integer> subsetsum = new ArrayList<>();
+        subset(0,0,arr,N,subsetsum);
+        Collections.sort(subsetsum);
+        return subsetsum;
+    }
+    void subset(int i, int sum,ArrayList<Integer> arr, int N,ArrayList<Integer> subsetsum){
+        if(i==N){
+            subsetsum.add(sum);
+            return;
+        }
+        subset(i+1,sum+arr.get(i),arr,N,subsetsum);
+        subset(i+1,sum ,arr,N,subsetsum);
+        
+    }
+}
+
+
+
+class Solution {
+    public void findss(int idx,int[] nums,List<Integer> ds,List<List<Integer>> ansList ){
+        ansList.add(new ArrayList<>(ds));
+        for(int i=idx;i<nums.length;i++){
+            if(i>idx && nums[i]==nums[i-1]) continue;
+            ds.add(nums[i]);
+            findss(i+1,nums,ds,ansList);
+            ds.remove(ds.size()-1);
+        }
+    }
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+         List<List<Integer>> res=new ArrayList<>();
+        findss(0,nums,new ArrayList<>(),res);
+        return res;
+    }
+}
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] a, int t) {
+        List<List<Integer>> ans = new ArrayList<>(); 
+        List<Integer> ls = new ArrayList<>();  
+        combSum(0,ans,a,t,ls); 
+        return ans;
+    }
+     static void combSum(int i,List<List<Integer>>ans,int a[],int t,List<Integer> ds) {
+		if(i==a.length){
+            if(t==0){
+              ans.add(new ArrayList<>(ds));
+            }
+           return;
+            
+        }
+    
+        if(a[i] <= t) {
+            ds.add(a[i]);
+            combSum(i,ans,a,t-a[i],ds); 
+            ds.remove(ds.size()-1); 
+        }
+        combSum(i+1,ans,a,t,ds); 
+    }
+}
+
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] cand, int target) {
+    Arrays.sort(cand);
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    List<Integer> path = new ArrayList<Integer>();
+    dfs_com(cand, 0, target, path, res);
+    return res;
+}
+void dfs_com(int[] cand, int cur, int target, List<Integer> path, List<List<Integer>> res) {
+    if(target ==0){
+        res.add
+    }
+    if (target == 0) {
+        res.add(new ArrayList(path));
+        return ;
+    }
+    if (target < 0) return;
+    for (int i = cur; i < cand.length; i++){
+        if (i > cur && cand[i] == cand[i-1]) continue;
+        path.add(path.size(), cand[i]);
+        dfs_com(cand, i+1, target - cand[i], path, res);
+        path.remove(path.size()-1);
+     }
+   }
+}
+
+
+
+
+class Solution {
+    public List<List<String>> partition(String s) {
+            List<List<String>>ans=new ArrayList<>();
+        List<String>temp=new ArrayList<>();
+        solve(0,s,ans,temp);
+        return ans;
+    }
+    public void solve(int ind,String s,List<List<String>>ans,List<String>temp){
+        if(ind==s.length()){
+            ans.add(new ArrayList<>(temp));
+            return;
+        }
+        for(int i=ind;i<s.length();i++){
+            if(isPalindrome(s,ind,i)){
+                temp.add(s.substring(ind,i+1));
+                solve(i+1,s,ans,temp);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+
+    public boolean isPalindrome(String s,int start,int end){
+        while(start<=end){
+            if(s.charAt(start++)!=s.charAt(end--)){
+                return false;
+            }
+        }
+        return true; 
+    }
+}
+
+
+class Solution {
+    static String getPermutation(int n, int k) {
+       int fact = 1;
+        ArrayList < Integer > numbers = new ArrayList < > ();
+        for (int i = 1; i < n; i++) {
+            fact = fact * i;
+            numbers.add(i);
+        }
+        numbers.add(n);
+        String ans = "";
+        k = k - 1;
+        while (true) {
+            ans = ans + "" + numbers.get(k / fact);
+            numbers.remove(k / fact);
+            if (numbers.size() == 0) {
+                break;
+            }
+            k = k % fact;
+            fact = fact / numbers.size();
+        }
+        return ans;
+    }
+    public static void main(String args[]) {
+        int n = 3, k = 3;
+        String ans = getPermutation(n, k);
+        System.out.println(ans);
+    }
+}
